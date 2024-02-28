@@ -1,32 +1,67 @@
+import { useState } from 'react'
+import Button from '../Button'
 import TextField from '../TextField'
 import DropdownList from '../DropdownList'
-import Button from '../Button'
 import './Form.css'
 
-const onSave = (event) => {
-    event.preventDefault()
-    console.log("posting form")
-}
+const Form = (props) => {
 
-const Form = () => {
     const teams = [
-        'Backend development',
-        'Frontend development',
+        'Backend developer',
+        'Frontend developer',
         'Data science',
         'Devops',
-        'UX & Design',
+        'UX e Design',
         'Mobile',
         'Management'
     ]
-    
+
+    const [name, setName] = useState('')
+    const [role, setRole] = useState('')
+    const [image, setImage] = useState('')
+    const [team, setTeam] = useState('')
+
+    const onSave = (event) => {
+        event.preventDefault()
+        props.onContributorCreated({
+            name,
+            role,
+            image,
+            team
+        })
+    }
+
     return (
         <section className="form">
             <form onSubmit={onSave}>
-                <h2>Fill the fields below to add a new colab</h2>
-                <TextField required="true" label="Name" placeholder="insert your name"/>
-                <TextField required="true" label="Role"  placeholder="insert your role"/>
-                <TextField label="Image"  placeholder="insert image address"/>
-                <DropdownList required="true" label="teams" itens={teams}/>
+                <h2>Preencha os dados para criar o card do colaborador</h2>
+                <TextField 
+                    required={true}
+                    label="Name"
+                    placeholder="type your name" 
+                    value={name}
+                    onChange={value => setName(value)}
+                />
+                <TextField
+                    required={true}
+                    label="Role"
+                    placeholder="type your role" 
+                    value={role}
+                    onChange={value => setRole(value)}
+                />
+                <TextField
+                    label="Image"
+                    placeholder="type the image address" 
+                    value={image}
+                    onChange={value => setImage(value)}
+                />
+                <DropdownList
+                    required={true}
+                    label="Time" 
+                    itens={teams}
+                    value={team}
+                    onChange={value => setTeam(value)}
+                />
                 <Button>
                     Create
                 </Button>
